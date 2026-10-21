@@ -1,0 +1,32 @@
+{
+  "common": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "orders": "Orders",
+    "customers": "Customers",
+    "reports": "Reports",
+    "settings": "Settings",
+    "search": "Search",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "actions": "Actions",
+    "status": "Status",
+    "total": "Total",
+    "all": "All",
+    "loading": "Loading..."
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Sign in to manage your store",
+    "email": "Email",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "submit": "Sign in",
+    "google": "Continue with Google",
+    "microsoft": "Continue with Microsoft"
+  }
+}

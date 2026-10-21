@@ -1,0 +1,64 @@
+<script setup lang="ts">
+const props = defineProps<{ data: { date: string; revenue: number; orders: number }[] }>()
+
+const option = computed(() => ({
+  grid: { left: 8, right: 8, top: 34, bottom: 0, containLabel: true },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'shadow' },
+    valueFormatter: (v: number) => new Intl.NumberFormat('lo-LA').format(v),
+  },
+  legend: {
+    right: 0,
+    top: 0,
+    icon: 'roundRect',
+    itemWidth: 10,
+    itemHeight: 10,
+    textStyle: { color: '#64748b', fontSize: 11 },
+    data: ['ລາຍຮັບ (LAK)', 'ຄຳສັ່ງຊື້'],
+  },
+  xAxis: {
+    type: 'category',
+    data: props.data.map((d) => d.date.slice(5).replace('-', '/')),
+    axisLine: { lineStyle: { color: '#e2e8f0' } },
+    axisTick: { show: false },
+    axisLabel: { color: '#94a3b8', fontSize: 10, interval: Math.ceil(props.data.length / 10) },
+  },
+  yAxis: [
+    {
+      type: 'value',
+      splitLine: { lineStyle: { color: '#f1f5f9' } },
+      axisLabel: {
+        color: '#94a3b8',
+        fontSize: 10,
+        formatter: (v: number) => (v >= 1e6 ? `${v / 1e6}M` : v >= 1e3 ? `${v / 1e3}K` : v),
+      },
+    },
+    { type: 'value', splitLine: { show: false }, axisLabel: { color: '#94a3b8', fontSize: 10 } },
+  ],
+  series: [
+    {
+      name: 'ລາຍຮັບ (LAK)',
+      type: 'bar',
+      barMaxWidth: 14,
+      itemStyle: { borderRadius: [4, 4, 0, 0], color: '#3b82f6' },
+      data: props.data.map((d) => d.revenue),
+    },
+    {
+      name: 'ຄຳສັ່ງຊື້',
+      type: 'line',
+      yAxisIndex: 1,
+      smooth: true,
+      symbol: 'circle',
+      symbolSize: 5,
+      lineStyle: { width: 2, color: '#22c55e' },
+      itemStyle: { color: '#22c55e' },
+      data: props.data.map((d) => d.orders),
+    },
+  ],
+}))
+</script>
+
+<template>
+  <VChart :option="option" autoresize class="h-64 w-full" />
+</template>
