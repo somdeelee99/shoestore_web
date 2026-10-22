@@ -24,8 +24,15 @@
     "zod": "^4.1.0"
   },
   "devDependencies": {
-    "nuxt": "^4.1.0",
+    "nuxt": "^4.6.2",
     "typescript": "^5.9.2",
     "vue-tsc": "^3.0.6"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "sharp@0.32.6": true,
+    "vue-demi@0.14.10": true,
+    "vue-demi@0.13.11": true
   }
 }
