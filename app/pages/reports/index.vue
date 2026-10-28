@@ -84,16 +84,19 @@ async function exportCsv() {
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      <StatCard label="ຍອດຂາຍລວມ" :value="currency(totals.revenue)" :growth="dashboard?.kpis.revenue.growth" icon="i-lucide-banknote" tone="blue" />
-      <StatCard label="ຄຳສັ່ງຊື້" :value="number(totals.orders)" :growth="dashboard?.kpis.orders.growth" icon="i-lucide-shopping-cart" tone="green" />
+      <StatCard label="ຍອດຂາຍລວມ" :value="currency(totals.revenue)" :growth="dashboard?.kpis.revenue.growth"
+        icon="i-lucide-banknote" tone="blue" />
+      <StatCard label="ຄຳສັ່ງຊື້" :value="number(totals.orders)" :growth="dashboard?.kpis.orders.growth"
+        icon="i-lucide-shopping-cart" tone="green" />
       <StatCard label="ສິນຄ້າທີ່ຂາຍ" :value="number(totals.items)" icon="i-lucide-package" tone="orange" hint="ຄູ່" />
-      <StatCard label="ລູກຄ້າທັງໝົດ" :value="number(dashboard?.kpis.customers.value ?? 0)" icon="i-lucide-users" tone="purple" hint="ສະສົມ" />
+      <StatCard label="ລູກຄ້າທັງໝົດ" :value="number(dashboard?.kpis.customers.value ?? 0)" icon="i-lucide-users"
+        tone="purple" hint="ສະສົມ" />
     </div>
 
     <div class="grid gap-4 xl:grid-cols-3">
       <div class="card p-5 xl:col-span-2">
         <h2 class="mb-3 text-sm font-semibold text-slate-800">ລາຍຮັບຕາມໄລຍະເວລາ</h2>
-        <RevenueChart v-if="dashboard" :data="dashboard.revenueChart" />
+        <RevenueChart v-if="dashboard" :data="dashboard.revenueChart" class="block h-64 w-full" />
         <div v-else class="h-64 animate-pulse rounded-xl bg-slate-100" />
       </div>
       <div class="card p-5">
@@ -110,7 +113,14 @@ async function exportCsv() {
       </div>
       <div class="table-wrap">
         <table class="table-base">
-          <thead><tr><th>ໄລຍະ</th><th>ຈຳນວນຄຳສັ່ງຊື້</th><th>ສິນຄ້າທີ່ຂາຍ</th><th>ລາຍຮັບ</th></tr></thead>
+          <thead>
+            <tr>
+              <th>ໄລຍະ</th>
+              <th>ຈຳນວນຄຳສັ່ງຊື້</th>
+              <th>ສິນຄ້າທີ່ຂາຍ</th>
+              <th>ລາຍຮັບ</th>
+            </tr>
+          </thead>
           <tbody>
             <tr v-for="r in revenue" :key="r.period">
               <td class="text-xs font-medium">{{ r.period }}</td>
@@ -118,17 +128,30 @@ async function exportCsv() {
               <td class="text-xs">{{ r.items }}</td>
               <td class="text-xs font-semibold text-slate-800">{{ currency(r.revenue) }}</td>
             </tr>
-            <tr v-if="!revenue.length"><td colspan="4"><EmptyState title="ບໍ່ມີຂໍ້ມູນໃນໄລຍະນີ້" /></td></tr>
+            <tr v-if="!revenue.length">
+              <td colspan="4">
+                <EmptyState title="ບໍ່ມີຂໍ້ມູນໃນໄລຍະນີ້" />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <div class="card">
-      <div class="border-b border-slate-100 px-5 py-4"><h2 class="text-sm font-semibold text-slate-800">ສິນຄ້າຂາຍດີ</h2></div>
+      <div class="border-b border-slate-100 px-5 py-4">
+        <h2 class="text-sm font-semibold text-slate-800">ສິນຄ້າຂາຍດີ</h2>
+      </div>
       <div class="table-wrap">
         <table class="table-base">
-          <thead><tr><th>#</th><th>ສິນຄ້າ</th><th>ຂາຍໄດ້</th><th>ລາຍຮັບ</th></tr></thead>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ສິນຄ້າ</th>
+              <th>ຂາຍໄດ້</th>
+              <th>ລາຍຮັບ</th>
+            </tr>
+          </thead>
           <tbody>
             <tr v-for="(p, i) in dashboard?.topProducts ?? []" :key="p.productId">
               <td class="text-slate-400">{{ i + 1 }}</td>

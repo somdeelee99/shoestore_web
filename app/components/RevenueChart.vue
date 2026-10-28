@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 const props = defineProps<{ data: { date: string; revenue: number; orders: number }[] }>()
+
+const maxOrders = computed(() => Math.max(...props.data.map((d) => d.orders), 1))
 
 const option = computed(() => ({
   grid: { left: 8, right: 8, top: 34, bottom: 0, containLabel: true },
@@ -34,7 +38,14 @@ const option = computed(() => ({
         formatter: (v: number) => (v >= 1e6 ? `${v / 1e6}M` : v >= 1e3 ? `${v / 1e3}K` : v),
       },
     },
-    { type: 'value', splitLine: { show: false }, axisLabel: { color: '#94a3b8', fontSize: 10 } },
+    {
+      type: 'value',
+      min: 0,
+      max: Math.max(10, maxOrders.value * 3),
+      interval: 2,
+      splitLine: { show: false },
+      axisLabel: { color: '#94a3b8', fontSize: 10 },
+    },
   ],
   series: [
     {
@@ -48,9 +59,9 @@ const option = computed(() => ({
       name: 'ຄຳສັ່ງຊື້',
       type: 'line',
       yAxisIndex: 1,
-      smooth: true,
+      smooth: false,
       symbol: 'circle',
-      symbolSize: 5,
+      symbolSize: 4,
       lineStyle: { width: 2, color: '#22c55e' },
       itemStyle: { color: '#22c55e' },
       data: props.data.map((d) => d.orders),
@@ -60,5 +71,8 @@ const option = computed(() => ({
 </script>
 
 <template>
-  <VChart :option="option" autoresize class="h-64 w-full" />
+  <!-- ຈຸດສຳຄັນຢູ່ນີ້: div ຂ້າງນອກລັອກ height ດ້ວຍ style -->
+  <div style="height: 256px; width: 100%; position: relative; overflow: hidden;">
+    <VChart :option="option" autoresize style="height: 100%; width: 100%;" />
+  </div>
 </template>
